@@ -22,7 +22,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import static java.lang.Math.pow;
 
 public class Main {
@@ -63,7 +62,7 @@ public class Main {
     {
         for (f = 0; f < 4; f++)
             for (g = 0; g < 4; g++) {
-                dataC[f][g] = (int) dataANew[f][g] + (double) dataBNew[f][g];
+                dataC[f][g] =Math.pow((int)dataANew[f][g],2) -10* (double) dataBNew[g][f];
             }
     }
 
@@ -119,22 +118,26 @@ public class Main {
         jTabA = new JTable(dataA, headersA);
         JScrollPane jscrlpA = new JScrollPane(jTabA);
         jTabA.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        jTabA.setBackground(Color.CYAN);
 
         jfrm.getContentPane().add(jscrlpA);
 
         jTabB = new JTable(dataB, headersB);
         JScrollPane jscrlpB = new JScrollPane(jTabB);
         jTabB.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        jTabB.setBackground(Color.CYAN);
 
         jfrm.getContentPane().add(jscrlpB);
         jTabANew = new JTable(dataANew, headersANew);
         JScrollPane jscrlpANew = new JScrollPane(jTabANew);
         jTabANew.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        jTabANew.setBackground(Color.orange);
         jfrm.getContentPane().add(jscrlpANew);
 
         jTabBNew = new JTable(dataBNew, headersBNew);
         JScrollPane jscrlpBNew = new JScrollPane(jTabBNew);
         jTabBNew.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        jTabBNew.setBackground(Color.orange);
         jfrm.getContentPane().add(jscrlpBNew);
 
         jTabC = new JTable(dataC, headersC);
