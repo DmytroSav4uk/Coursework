@@ -1,27 +1,10 @@
-//Постановка завдання. Для заданих в таблиці матриць A і B розмірності
-//        nm
-//        з цілими елементами (тип integer) обчислити елементи матриці C і
-//        виконати над ними завдання № 1 і № 2.
 
-//Операції з матрицями C=А^2-10*В^Т
-
-//Матриця А
-
-//m=4
-//n=4
-
-//Матриця В
-
-//m=4
-//n=4
-
-//Task1 - Знайти мінімаальний об'єкт матриці
-//Task2 - Добуток елементів парних рядків
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import static java.lang.Math.pow;
 
 public class Main {
@@ -62,38 +45,43 @@ public class Main {
     {
         for (f = 0; f < 4; f++)
             for (g = 0; g < 4; g++) {
-                dataC[f][g] =Math.pow((int)dataANew[f][g],2) -10* (double) dataBNew[g][f];
+                dataC[f][g] = 7 * f + 3 * g;
             }
     }
 
-    int p, l;
+    int p, l, count;
     double max, min;
     int nr_min, ns_min;
 
     {
-        max = (double) dataC[0][0];
-        min = (double) dataC[0][0];
+
         nr_min = 0;
         ns_min = 0;
+        count = 0;
+
 
         for (p = 0; p < dataC.length; p++)
             for (l = 0; l < dataC[p].length; l++) {
-                if (min > (double) dataC[p][l]) {
-                    min = (double) dataC[p][l];
-                    nr_min = p;
-                    ns_min = l;
+                int foo = (int) dataC[p][l];
+                if (  foo >  0 ) {
+                    count += 1;
                 }
             }
     }
 
     int p1, l1;
-    double product = 1;
+    int sum = 0;
 
     {
         for (p1 = 0; p1 < 4; p1++)
+
             for (l1 = 0; l1 < 4; l1++) {
-                product *= (double) dataC[p1][l1];
+                if (l1 % 2 != 0){
+                sum += (int) dataC[p1][l1];
+                System.out.println(dataC[p1][l1]);
+                }
             }
+
     }
 
     //Об'єкт таблиці А
@@ -108,7 +96,7 @@ public class Main {
     JTable jTabC;
 
     Main() {
-        JFrame jfrm = new JFrame("VARIANT_13, OK-33");
+        JFrame jfrm = new JFrame("VARIANT_10, OK-33");
 
         jfrm.getContentPane().setLayout(new GridLayout(3, 2));
         jfrm.setSize(900, 600);
@@ -118,32 +106,32 @@ public class Main {
         jTabA = new JTable(dataA, headersA);
         JScrollPane jscrlpA = new JScrollPane(jTabA);
         jTabA.setPreferredScrollableViewportSize(new Dimension(250, 100));
-        jTabA.setBackground(Color.CYAN);
+
 
         jfrm.getContentPane().add(jscrlpA);
 
         jTabB = new JTable(dataB, headersB);
         JScrollPane jscrlpB = new JScrollPane(jTabB);
         jTabB.setPreferredScrollableViewportSize(new Dimension(250, 100));
-        jTabB.setBackground(Color.CYAN);
+
 
         jfrm.getContentPane().add(jscrlpB);
         jTabANew = new JTable(dataANew, headersANew);
         JScrollPane jscrlpANew = new JScrollPane(jTabANew);
         jTabANew.setPreferredScrollableViewportSize(new Dimension(250, 100));
-        jTabANew.setBackground(Color.orange);
+
         jfrm.getContentPane().add(jscrlpANew);
 
         jTabBNew = new JTable(dataBNew, headersBNew);
         JScrollPane jscrlpBNew = new JScrollPane(jTabBNew);
         jTabBNew.setPreferredScrollableViewportSize(new Dimension(250, 100));
-        jTabBNew.setBackground(Color.orange);
+
         jfrm.getContentPane().add(jscrlpBNew);
 
         jTabC = new JTable(dataC, headersC);
         JScrollPane jscrlpC = new JScrollPane(jTabC);
         jTabC.setPreferredScrollableViewportSize(new Dimension(250, 100));
-        jTabC.setBackground(Color.yellow);
+
         jfrm.getContentPane().add(jscrlpC);
 
         JButton button = new JButton("Рохрахувати");
@@ -151,9 +139,9 @@ public class Main {
         JTextField text12 = new JTextField("              ");
         JLabel label3 = new JLabel("Номер стовпця мінімального елементу матриці С");
         JTextField text13 = new JTextField("              ");
-        JLabel label = new JLabel("Мінімальне значення матриці С");
+        JLabel label = new JLabel("Кількість додатних чисел матриці С");
         JTextField text = new JTextField("              ");
-        JLabel label1 = new JLabel("Добуток елементів парних рядків матриці  С");
+        JLabel label1 = new JLabel("сума елементів парних стовпців матриці  С");
         JTextField text1 = new JTextField("                       ");
         FlowLayout F1 = new FlowLayout();
         JPanel panel = new JPanel(F1);
@@ -176,8 +164,8 @@ public class Main {
                 //виводимо результат пошуку даних в матриці С
                 text12.setText("" + (nr_min + 1));
                 text13.setText("" + (ns_min + 1));
-                text.setText("" + min);
-                text1.setText("" + product);
+                text.setText("" + count);
+                text1.setText("" + sum);
             }
         });
     }
