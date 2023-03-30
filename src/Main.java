@@ -13,49 +13,51 @@ import javax.swing.SwingUtilities;
 
 
 public class Main {
-    Object[] headersA = { "Column 1", "Column 2", "Column 3", "Column 4", "Column 5" };
-    Object[] headersB = { "Column 1", "Column 2", "Column 3", "Column 4", "Column 5" };
-    Object[] headersAt = { "Column 1", "Column 2", "Column 3", "Column 4" };
-    Object[] headersBt = { "Column 1", "Column 2", "Column 3", "Column 4" };
-    Object[] headersC = { "Column 1", "Column 2", "Column 3", "Column 4" };
-    Object[][] A = { { 2, 3, 4, 2, 5 }, { 3, 6, 3, 5, 7 }, { 4, 6, 3, 1, 4 }, { 6, 2, 4, 3, 5 } };
+    Object[] headersA = { "Column 1", "Column 2", "Column 3", "Column 4"};
+    Object[] headersB = { "Column 1", "Column 2", "Column 3" };
+    Object[] headersAt = { "Column 1", "Column 2", "Column 3" };
+    Object[] headersBt = { "Column 1", "Column 2", "Column 3" };
+    Object[] headersC = { "Column 1", "Column 2", "Column 3" };
+    Object[][] A = { { 2, 3, 4, 2 }, { 3, 6, 3, 5 }, { 4, 6, 3, 1 } };
     Object[][] B = { { 3, 2, 4, 2, 6 }, { 2, 1, 6, 5, 7 }, { 3, 6, 4, 5, 4 }, { 5, 3, 4, 2, 6 } };
-    Object[][] At = new Object[5][4];
-    Object[][] Bt = new Object[5][5];
-    Object[][] C = new Object[5][4];
-    int i, j, f, g, count;
+    Object[][] At = new Object[3][4];
+    Object[][] Bt = new Object[4][3];
+    Object[][] C = new Object[4][3];
+    int i, j, f, g;
+    int maxElement = Integer.MIN_VALUE;
+
     {
-        for (i = 0; i < 4; i++)
-            for (j = 0; j < 5; j++) {
-                At[j][i] = (int) A[i][j];
+        for (i = 0; i < 3; i++)
+            for (j = 0; j < 4; j++) {
+                At[i][j] = (int) A[i][j];
             }
     }
     {
-        for (i = 0; i < 4; i++)
-            for (j = 0; j < 5; j++) {
+        for (i = 0; i < 3; i++)
+            for (j = 0; j < 4; j++) {
                 Bt[j][i] = (int) B[i][j];
             }
     }
 
     {
-        for (i = 0; i < 5; i++)
-            for (j = 0; j < 4; j++) {
-                C[i][j] = 4 * ((int) At[i][j] * (int) At[i][j]) + (int) Bt[i][j];
+        for (i = 0; i < 4; i++)
+            for (j = 0; j < 3; j++) {
+                C[i][j] = 4 * ((int) At[j][i] * (int) At[j][i]) + (int) Bt[i][j];
             }
     }
     {
-        for (i = 0; i < 5; i++)
-            for (j = 0; j < 4; j++) {
-                if ((int) C[i][j] > 0) {
-                    count++;
+        for (i = 0; i < 4; i++)
+            for (j = 0; j < 3; j++) {
+                if ((int) C[i][j] > maxElement) {
+                    maxElement =(int) C[i][j];
                 }
             }
     }
-    int sum = 0;
+    int product = 1;
     {
-        for (i = 1; i < 5; i++)
-            for (j = 0; j < 4; j = j + 2) {
-                sum = sum + (int) C[i][j];
+        for (i = 1; i < 4; i = i + 2)
+            for (j = 0; j < 3; j++) {
+                product *= (int) C[i][j];
 
             }
     }
@@ -66,7 +68,7 @@ public class Main {
     JTable jTabC;
 
     Main() {
-        JFrame jfrm = new JFrame("VARIANT 8, OK-33");
+        JFrame jfrm = new JFrame("VARIANT 15, OK-33");
 
         jfrm.getContentPane().setLayout(new GridLayout(3, 2));
         jfrm.setSize(900, 350);
@@ -99,9 +101,9 @@ public class Main {
         jfrm.getContentPane().add(jscrlpC);
 
         JButton button = new JButton("Рохрахувати");
-        JLabel label = new JLabel("Кількість елементів <0 в матриці С");
+        JLabel label = new JLabel("Максимальний елемент матриці С");
         JTextField text = new JTextField("              ");
-        JLabel label1 = new JLabel("Сума елементів непарних стовпчиків матриці С");
+        JLabel label1 = new JLabel("Добуток елементів непарних рядків матриці С");
         JTextField text1 = new JTextField("                       ");
 
         FlowLayout F1 = new FlowLayout();
@@ -116,8 +118,8 @@ public class Main {
         jfrm.getContentPane().add(panel);
         button.addActionListener(e -> {
 
-            text.setText("" + count);
-            text1.setText("" + sum);
+            text.setText("" + maxElement);
+            text1.setText("" + product);
         });
     }
 
